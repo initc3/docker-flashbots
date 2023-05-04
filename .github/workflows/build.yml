@@ -1,0 +1,33 @@
+name: build
+
+on:
+  pull_request:
+    branches: [ develop-boost ]
+
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: initc3/prysm
+  COMMIT: cecd2d9cbb9bd32187dcdc8167fe72b77d48eebe
+
+jobs:
+  build-beacon-chain:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Build docker image for flashbots prysm's fork
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          build-args: commit=${{ env.COMMIT }}
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ env.commit }},
+            ${{ env.IMAGE_NAME }}:${{ github.base_ref }},
