@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: Dockerfile
+          file: prysm/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           build-args: COMMIT=${{ matrix.commit }}
@@ -65,8 +65,8 @@ jobs:
         name: Build docker image for flashbots mev-boost block builder
         uses: docker/build-push-action@v4
         with:
-          context: ./builder
-          file: Dockerfile
+          context: .
+          file: builder/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           build-args: COMMIT=${{ matrix.commit }}
           tags: |
