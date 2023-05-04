@@ -1,7 +1,7 @@
 # docker-flashbots
 Dockerfiles for flashbots [builder][builder] and [prysm][prysm].
 
-> **Warning**: **FOR RESEARCH AND DEVELOPMENT PURPOSES. USE AT YOUR OWN RISK.**
+> **Warning**: **FOR RESEARCH AND DEVELOPMENT PURPOSES.**
 
 ## Flashbots Builder Images
 Pre-built images available at
