@@ -29,5 +29,5 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           build-args: commit=${{ env.COMMIT }}
           tags: |
-            ${{ env.IMAGE_NAME }}:${{ env.commit }},
+            ${{ env.IMAGE_NAME }}:${{ env.COMMIT }},
             ${{ env.IMAGE_NAME }}:${{ github.base_ref }},
