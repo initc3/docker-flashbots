@@ -1,0 +1,44 @@
+name: publish
+
+on:
+  push:
+    branches: [ develop-boost ]
+
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: initc3/prysm
+  COMMIT: cecd2d9cbb9bd32187dcdc8167fe72b77d48eebe
+
+jobs:
+  publish-beacon-chain:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build & publish docker image for flashbots prysm's fork
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          build-args: commit=${{ env.COMMIT }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.commit }},
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.base_ref }},
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
