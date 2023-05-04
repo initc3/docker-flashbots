@@ -26,8 +26,8 @@ jobs:
         name: Build docker image for flashbots prysm's fork
         uses: docker/build-push-action@v4
         with:
-          context: ./prysm
-          file: Dockerfile
+          context: .
+          file: prysm/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           build-args: COMMIT=${{ matrix.commit }}
           tags: |
@@ -52,8 +52,8 @@ jobs:
         name: Build docker image for flashbots mev-boost block builder
         uses: docker/build-push-action@v4
         with:
-          context: ./builder
-          file: Dockerfile
+          context: .
+          file: builder/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           build-args: COMMIT=${{ matrix.commit }}
           tags: |
