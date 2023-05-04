@@ -49,8 +49,8 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /workspace
 
-ARG commit
-RUN git clone https://github.com/flashbots/prysm.git . && git checkout ${commit}
+ARG COMMIT
+RUN git clone https://github.com/flashbots/prysm.git . && git checkout ${COMMIT}
 RUN bazel build //cmd/beacon-chain:beacon-chain --config=release
 
 ENTRYPOINT ["bazel","run","//cmd/beacon-chain:beacon-chain","--config=release","--"]
